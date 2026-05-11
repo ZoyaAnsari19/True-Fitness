@@ -501,6 +501,9 @@ a {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.10);
   box-shadow: var(--shadow);
+  position: relative;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+  will-change: transform;
 }
 
 .about-grid {
@@ -510,6 +513,38 @@ a {
 }
 .about-card {
   padding: 18px;
+}
+.about-card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms ease;
+  background:
+    radial-gradient(600px 220px at 50% 110%, rgba(0, 255, 136, 0.18), transparent 55%),
+    radial-gradient(520px 240px at 50% -10%, rgba(79, 139, 255, 0.10), transparent 60%);
+}
+.about-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(0, 255, 136, 0.22);
+  box-shadow:
+    0 0 0 1px rgba(0, 255, 136, 0.10),
+    0 20px 70px rgba(0, 0, 0, 0.55),
+    0 0 46px rgba(0, 255, 136, 0.10);
+}
+.about-card:hover::after {
+  opacity: 1;
+}
+.about-card:hover .ic {
+  background: rgba(0, 255, 136, 0.12);
+  box-shadow: 0 0 26px rgba(0, 255, 136, 0.14);
+  transform: translateY(-1px);
+}
+.about-card .ic {
+  transition: background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 .about-card .ic {
   width: 46px;
