@@ -29,3 +29,23 @@
 **Branch:** master  
 
 ---
+
+## [11-05-2026 15:24] — Replace `public/static/style.css` with provided `Downloads/style.css`
+
+**What changed:** Replaced the existing `public/static/style.css` with the exact CSS from `c:\\Users\\Truelink\\Downloads\\style.css` so card hover (“crystal/glass”) and all landing page styling match the provided stylesheet 1:1. Verified `next build` compiles successfully after the swap.  
+**Files touched:** `public/static/style.css`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
+## [11-05-2026 15:32] — Replace `public/static/app.js` with provided `Downloads/app.js`
+
+**What changed:** Replaced the existing `public/static/app.js` with the exact interactions script from `c:\\Users\\Truelink\\Downloads\\app.js` (sticky navbar, mobile menu icon toggle, reveal-in-view animations, data-count counters, smooth anchor scroll offset, testimonial slider with auto-slide, contact form validation/status, hero parallax, active nav link highlighting). Fixed one string escaping issue (`We\'ll`) so the JS parses cleanly. Verified `next build` compiles successfully after the swap.  
+**Files touched:** `public/static/app.js`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---

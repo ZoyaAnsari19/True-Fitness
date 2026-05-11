@@ -54,7 +54,7 @@ export default function Home() {
             </span>
             <h1 className="hero-title">
               Transform Your <span className="gradient-text">Fitness Journey</span> With True Fitness
-            </h1>
+          </h1>
             <p className="hero-sub">
               Professional gym training, workout tracking, personal coaching, diet plans, and membership management — all in one place.
             </p>
