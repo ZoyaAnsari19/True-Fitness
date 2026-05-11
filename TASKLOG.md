@@ -40,10 +40,70 @@
 
 ---
 
+## [11-05-2026 15:55] — Space between mini cards + streak at main card bottom-right
+
+**What changed:** On desktop, repositioned `.hero-card-bottom` (Active Streak) so its right edge lines up with the Live Workout card using `left: max(10px, calc(min(78%, 392px) - 236px))` and vertical `top: clamp(...)` near the main panel’s lower area; Calories stays top-right. On ≤980px / small screens, stacked both mini cards on the right again with an explicit **22px / 18px** extra gap between them (`top: calc(2% + 5.75rem + 22px)`).  
+**Files touched:** `public/static/style.css`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
+## [11-05-2026 15:48] — Align hero Active Streak card with calories column
+
+**What changed:** Repositioned `.hero-card-side` and `.hero-card-bottom` so both share `right: 0` and the streak card uses `top: calc(2% + 5.75rem)` with `bottom: auto` so it stacks under the calories mini-card instead of floating with mismatched `bottom`/`right` percentages. Added `max-width`/`z-index` tweaks and responsive rules for ≤980px and ≤380px.  
+**Files touched:** `public/static/style.css`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
+## [11-05-2026 15:40] — Enhance hero workout HUD cards (glass + crystal hover)
+
+**What changed:** Upgraded `.hero-visual` with a subtle HUD grid overlay and richer `.hero-blob` gradients. Reworked `.hero-card` glass styling (layered gradient fill, stronger blur/saturate, rim light), added `::after` sweep and crystal-style hover (neon border, inset highlight, outer glow) without `transform` so float + parallax JS keep working. Tuned exercise rows (darker icon wells, row hover, teal→cyan progress fills) and mini-stat cards (larger icons, clearer hierarchy).  
+**Files touched:** `public/static/style.css`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
 ## [11-05-2026 15:32] — Replace `public/static/app.js` with provided `Downloads/app.js`
 
 **What changed:** Replaced the existing `public/static/app.js` with the exact interactions script from `c:\\Users\\Truelink\\Downloads\\app.js` (sticky navbar, mobile menu icon toggle, reveal-in-view animations, data-count counters, smooth anchor scroll offset, testimonial slider with auto-slide, contact form validation/status, hero parallax, active nav link highlighting). Fixed one string escaping issue (`We\'ll`) so the JS parses cleanly. Verified `next build` compiles successfully after the swap.  
 **Files touched:** `public/static/app.js`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
+## [11-05-2026 17:00] — Hero mini cards: right column stack
+
+**What changed:** Wrapped Calories Today and Active Streak in `.hero-mini-column` (flex column with gap). Positioned the column top-right; mini cards use `position: relative` and full column width so Active Streak sits directly under Calories with consistent spacing (no overlap). Updated 980px and 380px media queries to target the column instead of per-card `top` hacks.  
+**Files touched:** `src/app/page.tsx`, `public/static/style.css`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
+## [11-05-2026 19:15] — Hero HUD: Calories top / Streak bottom of main card
+
+**What changed:** Introduced `.hero-hud-row` flex wrapper around the live session card and `.hero-mini-column` so the column stretches to the main card’s height. `.hero-mini-column` uses `justify-content: space-between` so Calories stays at the top-right and Active Streak sits at the bottom-right of that column (aligned with the main card’s bottom). Moved `.hero-blob` before the row in the DOM for clearer stacking. Adjusted responsive `flex`/`width` on the mini column.  
+**Files touched:** `src/app/page.tsx`, `public/static/style.css`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
+## [11-05-2026 19:40] — Preserve Live Session card dimensions in hero flex row
+
+**What changed:** On `.hero-hud-row .hero-card-main`, set `flex: 0 0 auto` and `align-self: flex-start` so the main glass card is not flex-shrunk or vertically stretched; removed `min-width: 0` that allowed width compression. Mini column still stretches to the flex line height so Calories / Streak layout stays correct.  
+**Files touched:** `public/static/style.css`, `TASKLOG.md`  
 **API endpoints used:** —  
 **Breaking change:** NO  
 **Branch:** zoya-dev  

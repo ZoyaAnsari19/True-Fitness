@@ -350,108 +350,269 @@ a { color: inherit; text-decoration: none; }
 }
 .hero-stats span { font-size: 13px; color: var(--text-mute); }
 
-/* Hero Visual */
+/* Hero Visual — glass HUD stack + crystal hover */
 .hero-visual {
   position: relative;
   height: 520px;
+  isolation: isolate;
+  border-radius: 28px;
+}
+/* Subtle technical grid behind cards */
+.hero-visual::before {
+  content: "";
+  position: absolute;
+  inset: 8% 4% 6% 4%;
+  border-radius: 24px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.22;
+  background-image:
+    linear-gradient(rgba(0, 255, 163, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  mask-image: radial-gradient(ellipse 85% 75% at 50% 45%, #000 0%, transparent 72%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 45%, #000 0%, transparent 72%);
 }
 .hero-blob {
   position: absolute;
-  inset: 10% 5%;
-  background: var(--grad);
-  filter: blur(80px);
-  opacity: 0.35;
+  inset: 8% 4%;
+  background:
+    radial-gradient(ellipse 70% 60% at 30% 35%, rgba(0, 255, 163, 0.22), transparent 55%),
+    radial-gradient(ellipse 60% 55% at 75% 65%, rgba(0, 212, 255, 0.18), transparent 55%),
+    radial-gradient(circle at 50% 50%, rgba(124, 92, 255, 0.08), transparent 50%);
+  filter: blur(72px);
+  opacity: 0.55;
   border-radius: 50%;
   z-index: 0;
 }
 .hero-card {
   position: absolute;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--border-2);
-  border-radius: var(--radius);
-  padding: 18px;
-  box-shadow: var(--shadow-card);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.09) 0%,
+    rgba(255, 255, 255, 0.03) 45%,
+    rgba(0, 0, 0, 0.12) 100%
+  );
+  backdrop-filter: blur(22px) saturate(1.35);
+  -webkit-backdrop-filter: blur(22px) saturate(1.35);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  padding: 20px 20px 18px;
+  box-shadow:
+    0 0 0 1px rgba(0, 255, 163, 0.06),
+    0 24px 48px -12px rgba(0, 0, 0, 0.65),
+    0 0 40px -8px rgba(0, 255, 163, 0.12);
+  z-index: 2;
+  overflow: hidden;
+  transition:
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease,
+    backdrop-filter 0.35s ease;
+}
+.hero-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: linear-gradient(
+    125deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.06) 48%,
+    rgba(0, 255, 163, 0.08) 52%,
+    transparent 60%
+  );
+}
+.hero-card:hover {
+  border-color: rgba(0, 255, 163, 0.38);
+  box-shadow:
+    0 0 0 1px rgba(0, 255, 163, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 0 28px rgba(0, 255, 163, 0.06),
+    0 28px 56px -14px rgba(0, 0, 0, 0.7),
+    0 0 48px -6px rgba(0, 255, 163, 0.22);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(0, 0, 0, 0.08) 100%
+  );
+  backdrop-filter: blur(26px) saturate(1.5);
+  -webkit-backdrop-filter: blur(26px) saturate(1.5);
+}
+.hero-card:hover::after {
+  opacity: 1;
+}
+/* Main + mini column share one row so mini column height matches main card */
+.hero-hud-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 8%;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: clamp(10px, 2vw, 18px);
+  z-index: 2;
+  pointer-events: none;
+}
+.hero-hud-row > .hero-card,
+.hero-hud-row > .hero-mini-column {
+  pointer-events: auto;
+}
+.hero-hud-row .hero-card-main {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  width: 78%;
+  max-width: 392px;
+  /* Keep Live Session card size content-driven — no flex stretch / shrink */
+  flex: 0 0 auto;
+  align-self: flex-start;
   z-index: 2;
 }
-.hero-card-main {
-  top: 8%; left: 0;
-  width: 78%;
-  max-width: 380px;
+/* Right column: Calories top, Active Streak bottom (same height as main card) */
+.hero-mini-column {
+  position: relative;
+  top: auto;
+  right: auto;
+  left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  z-index: 3;
+  flex: 0 0 min(240px, 42vw);
+  width: min(240px, 42vw);
+  min-width: 0;
+  align-self: stretch;
 }
-.hero-card-side {
-  top: 0; right: 0;
-  padding: 16px 20px;
+.hero-visual .hero-mini-column > .hero-card {
+  position: relative;
+  top: auto;
+  right: auto;
+  left: auto;
+  bottom: auto;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
 }
+.hero-card-side,
 .hero-card-bottom {
-  bottom: 4%; right: 10%;
-  padding: 16px 20px;
+  padding: 18px 22px;
 }
 .card-head {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 12px; color: var(--text-dim);
-  margin-bottom: 14px;
-  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(236, 240, 245, 0.85);
+  margin-bottom: 16px;
+  font-weight: 600;
 }
 .pulse-dot {
   width: 8px; height: 8px;
   border-radius: 50%;
   background: var(--neon);
-  box-shadow: 0 0 10px var(--neon);
+  box-shadow: 0 0 14px rgba(0, 255, 163, 0.85);
   animation: pulse 1.4s infinite;
+}
+.hero-card .card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 .exercise-row {
   display: grid;
-  grid-template-columns: 36px 1fr 90px;
-  gap: 12px;
+  grid-template-columns: 40px 1fr 92px;
+  gap: 14px;
   align-items: center;
-  padding: 10px 0;
-  border-top: 1px solid var(--border);
+  padding: 12px 10px;
+  margin: 0 -6px;
+  border-radius: 14px;
+  border-top: 1px solid transparent;
+  border: 1px solid transparent;
+  transition: background 0.25s ease, border-color 0.25s ease;
 }
-.exercise-row:first-of-type { border-top: 0; }
+.exercise-row:first-of-type {
+  padding-top: 0;
+}
+.exercise-row + .exercise-row {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.exercise-row:hover {
+  background: rgba(0, 255, 163, 0.04);
+  border-color: rgba(255, 255, 255, 0.06);
+}
 .exercise-row > i {
-  width: 36px; height: 36px;
+  width: 40px; height: 40px;
   display: grid; place-items: center;
-  border-radius: 10px;
-  background: var(--grad-soft);
+  border-radius: 12px;
+  background: rgba(6, 18, 24, 0.65);
+  border: 1px solid rgba(0, 255, 163, 0.18);
   color: var(--neon);
-  font-size: 14px;
+  font-size: 15px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
-.exercise-row .meta { display: flex; flex-direction: column; gap: 2px; }
-.exercise-row .t { font-size: 13px; font-weight: 600; color: var(--text); }
+.exercise-row .meta { display: flex; flex-direction: column; gap: 3px; }
+.exercise-row .t { font-size: 13px; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
 .exercise-row .s { font-size: 11px; color: var(--text-mute); }
 .bar {
-  height: 6px;
-  background: rgba(255,255,255,0.06);
+  height: 7px;
+  background: rgba(0, 0, 0, 0.35);
   border-radius: 999px;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.35);
 }
 .bar .fill {
   height: 100%;
-  background: var(--grad);
+  background: linear-gradient(90deg, #00a87a 0%, #00ffa3 45%, #00d4ff 100%);
   border-radius: 999px;
-  box-shadow: 0 0 12px rgba(0,255,163,0.6);
+  box-shadow: 0 0 14px rgba(0, 255, 163, 0.55), 0 0 20px rgba(0, 212, 255, 0.25);
 }
 .mini-stat {
-  display: flex; align-items: center; gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 .mini-stat > i {
-  width: 42px; height: 42px;
+  width: 48px; height: 48px;
   display: grid; place-items: center;
-  border-radius: 12px;
-  background: var(--grad-soft);
+  border-radius: 14px;
+  background: rgba(6, 18, 24, 0.7);
+  border: 1px solid rgba(0, 255, 163, 0.22);
   color: var(--neon);
-  font-size: 18px;
+  font-size: 19px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 20px rgba(0, 255, 163, 0.12);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.hero-card:hover .mini-stat > i {
+  border-color: rgba(0, 255, 163, 0.4);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 24px rgba(0, 255, 163, 0.2);
 }
 .mini-stat .num {
   display: block;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 20px;
   color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
-.mini-stat .lbl { font-size: 11px; color: var(--text-mute); }
+.mini-stat .lbl { font-size: 11px; color: var(--text-mute); font-weight: 500; }
 
 .float-slow { animation: floatY 7s ease-in-out infinite; }
 .float-slow-rev { animation: floatY 8s ease-in-out infinite reverse; }
@@ -1044,6 +1205,10 @@ a { color: inherit; text-decoration: none; }
   .hero { padding: 130px 0 60px; }
   .hero-inner { grid-template-columns: 1fr; gap: 50px; }
   .hero-visual { height: 460px; max-width: 520px; margin: 0 auto; width: 100%; }
+  .hero-mini-column {
+    flex: 0 0 min(240px, 46%);
+    width: min(240px, 46%);
+  }
   .tracking-wrap { grid-template-columns: 1fr; }
   .contact-wrap { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
@@ -1058,7 +1223,7 @@ a { color: inherit; text-decoration: none; }
   .hero-stats strong { font-size: 22px; }
   .hero-cta .btn { flex: 1; }
   .hero-visual { height: 420px; }
-  .hero-card-main { width: 86%; }
+  .hero-hud-row .hero-card-main { width: 86%; }
   .row-stats { grid-template-columns: 1fr; }
   .ring-card { flex-direction: column; text-align: center; }
   .footer-grid { grid-template-columns: 1fr; gap: 28px; }
@@ -1068,8 +1233,14 @@ a { color: inherit; text-decoration: none; }
   .contact-form { padding: 26px; }
 }
 @media (max-width: 380px) {
-  .hero-card-side { padding: 12px 14px; }
-  .hero-card-bottom { padding: 12px 14px; right: 4%; }
+  .hero-mini-column {
+    flex: 0 0 min(220px, calc(100% - 8px));
+    width: min(220px, calc(100% - 8px));
+  }
+  .hero-mini-column .hero-card {
+    padding: 12px 14px;
+    min-width: 0;
+  }
 }
 
 /* Selection */

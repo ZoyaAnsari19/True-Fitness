@@ -74,60 +74,63 @@ export default function Home() {
           </div>
 
           <div className="hero-visual reveal">
-            <div className="hero-card hero-card-main float-slow">
-              <div className="card-head">
-                <span className="pulse-dot"></span>
-                <span>Live Workout Session</span>
-              </div>
-              <div className="card-body">
-                <div className="exercise-row">
-                  <i className="fa-solid fa-person-running"></i>
-                  <div className="meta">
-                    <span className="t">Treadmill Sprint</span>
-                    <span className="s">12 min · 380 kcal</span>
-                  </div>
-                  <div className="bar"><div className="fill" style={{ width: "78%" }}></div></div>
-                </div>
-                <div className="exercise-row">
-                  <i className="fa-solid fa-dumbbell"></i>
-                  <div className="meta">
-                    <span className="t">Chest Press</span>
-                    <span className="s">4 sets · 12 reps</span>
-                  </div>
-                  <div className="bar"><div className="fill" style={{ width: "62%" }}></div></div>
-                </div>
-                <div className="exercise-row">
-                  <i className="fa-solid fa-heart-pulse"></i>
-                  <div className="meta">
-                    <span className="t">Heart Rate</span>
-                    <span className="s">142 bpm · Optimal Zone</span>
-                  </div>
-                  <div className="bar"><div className="fill" style={{ width: "88%" }}></div></div>
-                </div>
-              </div>
-            </div>
-
-            <div className="hero-card hero-card-side float-fast">
-              <div className="mini-stat">
-                <i className="fa-solid fa-fire"></i>
-                <div>
-                  <span className="num">1,248</span>
-                  <span className="lbl">Calories Today</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="hero-card hero-card-bottom float-slow-rev">
-              <div className="mini-stat">
-                <i className="fa-solid fa-trophy"></i>
-                <div>
-                  <span className="num">28 Days</span>
-                  <span className="lbl">Active Streak</span>
-                </div>
-              </div>
-            </div>
-
             <div className="hero-blob" aria-hidden="true"></div>
+            <div className="hero-hud-row">
+              <div className="hero-card hero-card-main float-slow">
+                <div className="card-head">
+                  <span className="pulse-dot"></span>
+                  <span>Live Workout Session</span>
+                </div>
+                <div className="card-body">
+                  <div className="exercise-row">
+                    <i className="fa-solid fa-person-running"></i>
+                    <div className="meta">
+                      <span className="t">Treadmill Sprint</span>
+                      <span className="s">12 min · 380 kcal</span>
+                    </div>
+                    <div className="bar"><div className="fill" style={{ width: "78%" }}></div></div>
+                  </div>
+                  <div className="exercise-row">
+                    <i className="fa-solid fa-dumbbell"></i>
+                    <div className="meta">
+                      <span className="t">Chest Press</span>
+                      <span className="s">4 sets · 12 reps</span>
+                    </div>
+                    <div className="bar"><div className="fill" style={{ width: "62%" }}></div></div>
+                  </div>
+                  <div className="exercise-row">
+                    <i className="fa-solid fa-heart-pulse"></i>
+                    <div className="meta">
+                      <span className="t">Heart Rate</span>
+                      <span className="s">142 bpm · Optimal Zone</span>
+                    </div>
+                    <div className="bar"><div className="fill" style={{ width: "88%" }}></div></div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="hero-mini-column">
+                <div className="hero-card hero-card-side float-fast">
+                  <div className="mini-stat">
+                    <i className="fa-solid fa-fire"></i>
+                    <div>
+                      <span className="num">1,248</span>
+                      <span className="lbl">Calories Today</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="hero-card hero-card-bottom float-slow-rev">
+                  <div className="mini-stat">
+                    <i className="fa-solid fa-trophy"></i>
+                    <div>
+                      <span className="num">28 Days</span>
+                      <span className="lbl">Active Streak</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
