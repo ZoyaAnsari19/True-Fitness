@@ -100,6 +100,16 @@
 
 ---
 
+## [13-05-2026 17:05] — Login visual: stat cards grid + polish
+
+**What changed:** Replaced the overlapping `position: absolute` layout for `.floating-cards` with a stable **2-column CSS grid**: row 1 = Calories + Heart Rate side by side; row 2 = Workout Streak spanning full width (`grid-column: 1 / -1`). Removed the infinite `translateY` float animation so cards stay aligned. Card visuals: layered glass gradient background, inset highlight, soft `::before` rim, stronger hover lift + shadow, larger icon wells (46px) with gradient fills, borders, and glow. `.fc-body` is a flex column with `margin-top: auto` on the bar / pulse / streak rows so metrics align to the bottom when row-1 cards share height. Progress bar slightly taller with inset shadow; streak pills rounded (`999px`) and taller; pulse wave height increased.  
+**Files touched:** `src/app/login/login.css`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
 ## [13-05-2026 16:47] — Wire "Member Login" buttons to `/login`
 
 **What changed:** All "Member Login" entry points on the landing page (`src/app/page.tsx`) now navigate to the new `/login` route instead of the dead `#login` hash anchor. Imported `Link` from `next/link` and replaced every `<a href="#login">…</a>` with `<Link href="/login">…</Link>` (5 occurrences: desktop navbar, mobile menu, hero CTA, final CTA, footer Quick Links). Using `next/link` gives client-side navigation + automatic prefetch of the login page on hover/viewport, so the click is instant. Verified with `next build` — routes still show `○ /` and `○ /login` (both static prerendered).  
