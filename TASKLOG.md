@@ -100,6 +100,26 @@
 
 ---
 
+## [13-05-2026 16:47] — Wire "Member Login" buttons to `/login`
+
+**What changed:** All "Member Login" entry points on the landing page (`src/app/page.tsx`) now navigate to the new `/login` route instead of the dead `#login` hash anchor. Imported `Link` from `next/link` and replaced every `<a href="#login">…</a>` with `<Link href="/login">…</Link>` (5 occurrences: desktop navbar, mobile menu, hero CTA, final CTA, footer Quick Links). Using `next/link` gives client-side navigation + automatic prefetch of the login page on hover/viewport, so the click is instant. Verified with `next build` — routes still show `○ /` and `○ /login` (both static prerendered).  
+**Files touched:** `src/app/page.tsx`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
+## [13-05-2026 16:35] — Add `/login` route from Hono login page
+
+**What changed:** Converted the Hono-based login files (`Downloads/index (1).tsx`, `Downloads/renderer (1).tsx`, `Downloads/static/static/style.css`, `Downloads/static/static/app.js`) into a proper Next.js App Router route at `src/app/login/`. Folder structure: `page.tsx` (server component exporting `metadata` title `"True Fitness | Member Login"` + description, renders the client view), `LoginView.tsx` (`'use client'` component holding the full UI + all interactions), and `login.css` (colocated stylesheet, imported by `LoginView.tsx`). JSX ported with React conventions: `class` → `className`, `for` → `htmlFor`, `autocomplete` → `autoComplete`, `novalidate` → `noValidate`, `minlength` → `minLength`, SVG attrs to camelCase (`strokeWidth`, `strokeLinecap`, `strokeLinejoin`), and inline `style="width: 72%"` → `style={{ width: "72%" }}`. The vanilla `app.js` script was rewritten as React hooks inside `LoginView.tsx`: `useState` for email/password/remember/showPassword/errors/loading/success, `useRef` for the card and inputs, `useEffect` for the desktop-only card tilt parallax and the global orb pointer parallax (both with `requestAnimationFrame` + cleanup), Web Animations API `el.animate(...)` for input shake on validation failure and social button press feedback. CSS scoping: all selectors prefixed with `.login-page` (root wrapper around the page), CSS variables renamed to `--login-*` so they don’t collide with the landing page tokens loaded globally from `public/static/style.css`, and `isolation: isolate` added on `.login-page` so the negative-z-index `.bg-wrapper` stays within the login stacking context. Landing page (`/`) and root `layout.tsx` left untouched. Verified `next build` compiles successfully — new route appears as `○ /login` (static) alongside `○ /`.  
+**Files touched:** `src/app/login/page.tsx`, `src/app/login/LoginView.tsx`, `src/app/login/login.css`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
 ## [11-05-2026 19:40] — Preserve Live Session card dimensions in hero flex row
 
 **What changed:** On `.hero-hud-row .hero-card-main`, set `flex: 0 0 auto` and `align-self: flex-start` so the main glass card is not flex-shrunk or vertically stretched; removed `min-width: 0` that allowed width compression. Mini column still stretches to the flex line height so Calories / Streak layout stays correct.  

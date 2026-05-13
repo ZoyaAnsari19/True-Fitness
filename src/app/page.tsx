@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <>
@@ -25,7 +27,7 @@ export default function Home() {
             <a href="#contact">Contact</a>
           </div>
           <div className="nav-actions">
-            <a href="#login" className="btn btn-ghost">Member Login</a>
+            <Link href="/login" className="btn btn-ghost">Member Login</Link>
             <a href="#join" className="btn btn-primary">Join Now</a>
           </div>
           <button id="menuToggle" className="menu-toggle" aria-label="Open menu">
@@ -39,7 +41,7 @@ export default function Home() {
           <a href="#tracking">Tracking</a>
           <a href="#testimonials">Reviews</a>
           <a href="#contact">Contact</a>
-          <a href="#login" className="btn btn-ghost full">Member Login</a>
+          <Link href="/login" className="btn btn-ghost full">Member Login</Link>
           <a href="#join" className="btn btn-primary full">Join Now</a>
         </div>
       </nav>
@@ -62,9 +64,9 @@ export default function Home() {
               <a href="#join" className="btn btn-primary btn-lg">
                 <i className="fa-solid fa-dumbbell"></i> Join Now
               </a>
-              <a href="#login" className="btn btn-ghost btn-lg">
+              <Link href="/login" className="btn btn-ghost btn-lg">
                 <i className="fa-solid fa-arrow-right-to-bracket"></i> Member Login
-              </a>
+              </Link>
             </div>
             <div className="hero-stats">
               <div><strong>10K+</strong><span>Active Members</span></div>
@@ -471,9 +473,9 @@ export default function Home() {
               <a href="#membership" className="btn btn-primary btn-lg">
                 <i className="fa-solid fa-dumbbell"></i> Join Now
               </a>
-              <a href="#login" className="btn btn-ghost btn-lg">
+              <Link href="/login" className="btn btn-ghost btn-lg">
                 <i className="fa-solid fa-arrow-right-to-bracket"></i> Member Login
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -506,7 +508,7 @@ export default function Home() {
           <div className="footer-col">
             <h5>Quick Links</h5>
             <a href="#join">Join Now</a>
-            <a href="#login">Member Login</a>
+            <Link href="/login">Member Login</Link>
             <a href="#contact">Contact</a>
             <a href="#features">Diet Plan</a>
             <a href="#features">Personal Coaching</a>
