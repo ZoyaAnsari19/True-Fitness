@@ -1,0 +1,135 @@
+/* Join page form fields — extends .login-page from login.css */
+
+.login-page .join-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.login-page .join-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login-page .join-field label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--login-text-dim);
+}
+
+.login-page .join-field input,
+.login-page .join-field select,
+.login-page .join-field textarea {
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 16px;
+  border-radius: var(--radius-field);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--login-border);
+  font-size: 15px;
+  color: var(--login-text);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  outline: none;
+  font-family: inherit;
+}
+
+.login-page .join-field textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.login-page .join-field input:focus,
+.login-page .join-field select:focus,
+.login-page .join-field textarea:focus {
+  border-color: rgba(46, 123, 255, 0.55);
+  background: rgba(46, 123, 255, 0.06);
+  box-shadow: 0 0 0 4px rgba(46, 123, 255, 0.12),
+    0 0 30px -8px rgba(46, 123, 255, 0.35);
+}
+
+.login-page .join-field input.has-error,
+.login-page .join-field select.has-error,
+.login-page .join-field textarea.has-error {
+  border-color: rgba(255, 93, 110, 0.7);
+  box-shadow: 0 0 0 4px rgba(255, 93, 110, 0.12),
+    0 0 26px -6px rgba(255, 93, 110, 0.35);
+}
+
+.login-page .join-field select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236b7280' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 44px;
+}
+
+.login-page .join-field select option {
+  background: #0f131c;
+  color: var(--login-text);
+}
+
+.login-page .join-hint {
+  font-size: 13px;
+  color: var(--login-text-muted);
+  margin: 0;
+}
+
+.login-page .join-hint a.link-accent {
+  color: var(--login-accent-blue-2);
+  font-weight: 600;
+}
+
+.login-page .join-hint a.link-accent:hover {
+  text-decoration: underline;
+}
+
+/* ============================================
+   Join page layout — wider form, promo card right-aligned
+   ============================================ */
+
+@media (min-width: 1024px) {
+  .login-page.join-page .login-shell {
+    max-width: 1320px;
+    grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.75fr);
+    gap: 48px 40px;
+    align-items: start;
+  }
+
+  /* Form first (left), wider */
+  .login-page.join-page .form-side {
+    order: 1;
+    align-items: stretch;
+    justify-self: stretch;
+    width: 100%;
+    max-width: none;
+  }
+
+  .login-page.join-page .login-card {
+    max-width: none;
+    width: 100%;
+  }
+
+  /* True Fitness promo card: second column, hug right */
+  .login-page.join-page .visual-side {
+    order: 2;
+    justify-self: end;
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .login-page.join-page .login-shell {
+    grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.72fr);
+    gap: 56px 48px;
+  }
+
+  .login-page.join-page .visual-side {
+    max-width: 440px;
+  }
+}

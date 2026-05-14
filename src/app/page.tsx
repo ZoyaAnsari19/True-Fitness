@@ -28,7 +28,7 @@ export default function Home() {
           </div>
           <div className="nav-actions">
             <Link href="/login" className="btn btn-ghost">Member Login</Link>
-            <a href="#join" className="btn btn-primary">Join Now</a>
+            <Link href="/join" className="btn btn-primary">Join Now</Link>
           </div>
           <button id="menuToggle" className="menu-toggle" aria-label="Open menu">
             <i className="fa-solid fa-bars"></i>
@@ -42,7 +42,7 @@ export default function Home() {
           <a href="#testimonials">Reviews</a>
           <a href="#contact">Contact</a>
           <Link href="/login" className="btn btn-ghost full">Member Login</Link>
-          <a href="#join" className="btn btn-primary full">Join Now</a>
+          <Link href="/join" className="btn btn-primary full">Join Now</Link>
         </div>
       </nav>
 
@@ -61,9 +61,9 @@ export default function Home() {
               Professional gym training, workout tracking, personal coaching, diet plans, and membership management — all in one place.
             </p>
             <div className="hero-cta">
-              <a href="#join" className="btn btn-primary btn-lg">
+              <Link href="/join" className="btn btn-primary btn-lg">
                 <i className="fa-solid fa-dumbbell"></i> Join Now
-              </a>
+              </Link>
               <Link href="/login" className="btn btn-ghost btn-lg">
                 <i className="fa-solid fa-arrow-right-to-bracket"></i> Member Login
               </Link>
@@ -233,7 +233,7 @@ export default function Home() {
                 <li className="muted"><i className="fa-solid fa-xmark"></i> Personal coaching</li>
                 <li className="muted"><i className="fa-solid fa-xmark"></i> Custom diet plan</li>
               </ul>
-              <a href="#join" className="btn btn-ghost full">Join Now</a>
+              <Link href="/join?plan=basic" className="btn btn-ghost full">Join Now</Link>
             </div>
 
             <div className="glass-card plan popular reveal">
@@ -251,7 +251,7 @@ export default function Home() {
                 <li><i className="fa-solid fa-check"></i> Progress insights</li>
                 <li className="muted"><i className="fa-solid fa-xmark"></i> 1-on-1 personal coaching</li>
               </ul>
-              <a href="#join" className="btn btn-primary full">Join Now</a>
+              <Link href="/join?plan=pro" className="btn btn-primary full">Join Now</Link>
             </div>
 
             <div className="glass-card plan reveal">
@@ -268,7 +268,7 @@ export default function Home() {
                 <li><i className="fa-solid fa-check"></i> Unlimited training hours</li>
                 <li><i className="fa-solid fa-check"></i> Exclusive members-only events</li>
               </ul>
-              <a href="#join" className="btn btn-primary full">Join Now</a>
+              <Link href="/join?plan=premium" className="btn btn-primary full">Join Now</Link>
             </div>
           </div>
         </div>
@@ -470,9 +470,9 @@ export default function Home() {
               Join True Fitness and achieve your fitness goals with expert coaching, workout tracking, and professional guidance.
             </p>
             <div className="hero-cta center">
-              <a href="#membership" className="btn btn-primary btn-lg">
+              <Link href="/join" className="btn btn-primary btn-lg">
                 <i className="fa-solid fa-dumbbell"></i> Join Now
-              </a>
+              </Link>
               <Link href="/login" className="btn btn-ghost btn-lg">
                 <i className="fa-solid fa-arrow-right-to-bracket"></i> Member Login
               </Link>
@@ -507,7 +507,7 @@ export default function Home() {
           </div>
           <div className="footer-col">
             <h5>Quick Links</h5>
-            <a href="#join">Join Now</a>
+            <Link href="/join">Join Now</Link>
             <Link href="/login">Member Login</Link>
             <a href="#contact">Contact</a>
             <a href="#features">Diet Plan</a>
