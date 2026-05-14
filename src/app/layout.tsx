@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { RevealOnScroll } from "../components/RevealOnScroll";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default function RootLayout({
         <link href="/static/style.css" rel="stylesheet" />
       </head>
       <body>
+        <RevealOnScroll />
         {children}
         <Script src="/static/app.js" strategy="afterInteractive" />
       </body>

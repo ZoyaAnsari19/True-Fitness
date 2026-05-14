@@ -40,26 +40,8 @@
     });
   }
 
-  // ============================================
-  // Reveal on Scroll (IntersectionObserver)
-  // ============================================
-  const revealEls = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry, idx) => {
-        if (entry.isIntersecting) {
-          // small stagger for siblings
-          const delay = entry.target.dataset.delay || (idx * 60);
-          entry.target.style.transitionDelay = `${delay}ms`;
-          entry.target.classList.add('in-view');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-    revealEls.forEach(el => io.observe(el));
-  } else {
-    revealEls.forEach(el => el.classList.add('in-view'));
-  }
+  // Reveal on scroll: handled by src/components/RevealOnScroll.tsx so it re-runs after
+  // Next.js client navigation (app.js only loads once).
 
   // ============================================
   // Animated Counters (data-count)
