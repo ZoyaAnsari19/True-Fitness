@@ -1,5 +1,74 @@
 import Link from "next/link";
 
+type AchievementGalleryItem = {
+  title: string;
+  description: string;
+  date: string;
+  dateIso: string;
+  image: string;
+  alt: string;
+  featured?: boolean;
+};
+
+const ACHIEVEMENT_GALLERY: AchievementGalleryItem[] = [
+  {
+    title: "Transformation Challenge — Grand Winner",
+    description:
+      "12-week guided program combining strength, nutrition check-ins, and accountability. Our member dropped 18% body fat while building visible muscle definition.",
+    date: "March 2025",
+    dateIso: "2025-03",
+    image:
+      "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1400&q=82",
+    alt: "Member celebrating a fitness transformation in the gym",
+    featured: true,
+  },
+  {
+    title: "Regional Powerlifting Podium",
+    description: "True Fitness athletes took 1st and 3rd in the 82.5kg class at the West Coast Open.",
+    date: "Jan 2025",
+    dateIso: "2025-01",
+    image:
+      "https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&w=1000&q=82",
+    alt: "Athlete preparing for a powerlifting competition",
+  },
+  {
+    title: "100+ Documented Member Transformations",
+    description: "Our coaching team crossed 100 full transformation case studies with before-and-after tracking in-app.",
+    date: "2024 Season",
+    dateIso: "2024",
+    image:
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1000&q=82",
+    alt: "High intensity functional training session",
+  },
+  {
+    title: "City Classic Physique — Top 5",
+    description: "Posing coaching and peak-week protocols helped our athlete place in the top five at the City Classic.",
+    date: "Nov 2024",
+    dateIso: "2024-11",
+    image:
+      "https://images.unsplash.com/photo-1583454110551-21f2fa326867?auto=format&fit=crop&w=1000&q=82",
+    alt: "Bodybuilding and physique training with dumbbells",
+  },
+  {
+    title: "Night Run Club — 500+ Finishers",
+    description: "Our annual charity night run sold out in 48 hours. Members and the local community raised six figures for youth sports.",
+    date: "Sept 2024",
+    dateIso: "2024-09",
+    image:
+      "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1000&q=82",
+    alt: "Group fitness event and running club outdoors",
+  },
+  {
+    title: "Elite Coaching Certification Hub",
+    description: "Ten trainers completed advanced performance certifications; members get science-backed programming every session.",
+    date: "Ongoing",
+    dateIso: "2024",
+    image:
+      "https://images.unsplash.com/photo-1574680096141-d9520b867bb6?auto=format&fit=crop&w=1000&q=82",
+    alt: "Personal trainer coaching a member on form",
+  },
+];
+
 export default function Home() {
   return (
     <>
@@ -24,6 +93,7 @@ export default function Home() {
             <a href="#membership">Membership</a>
             <a href="#tracking">Tracking</a>
             <a href="#testimonials">Reviews</a>
+            <a href="#achievements">Achievements</a>
             <a href="#contact">Contact</a>
           </div>
           <div className="nav-actions">
@@ -40,6 +110,7 @@ export default function Home() {
           <a href="#membership">Membership</a>
           <a href="#tracking">Tracking</a>
           <a href="#testimonials">Reviews</a>
+          <a href="#achievements">Achievements</a>
           <a href="#contact">Contact</a>
           <Link href="/login" className="btn btn-ghost full">Member Login</Link>
           <Link href="/join" className="btn btn-primary full">Join Now</Link>
@@ -388,6 +459,101 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ACHIEVEMENTS */}
+      <section id="achievements" className="section achievements-section">
+        <div className="container">
+          <div className="achievements-head section-head reveal">
+            <span className="eyebrow">
+              <i className="fa-solid fa-award" aria-hidden="true"></i> Our achievements
+            </span>
+            <h2 className="section-title">
+              Real Transformations. <span className="gradient-text">Real Results.</span>
+            </h2>
+            <p className="section-sub">
+              From fitness transformations to championship moments, True Fitness continues to inspire
+              members to achieve their goals every day.
+            </p>
+          </div>
+
+          <div className="achievements-masonry">
+            {ACHIEVEMENT_GALLERY.map((item) => (
+              <AchievementCard key={`${item.dateIso}-${item.title}`} {...item} />
+            ))}
+          </div>
+
+          <div className="ach-stats">
+            <div className="ach-stat reveal">
+              <div className="ic" aria-hidden="true">
+                <i className="fa-solid fa-users"></i>
+              </div>
+              <strong>
+                <span data-count="500">0</span>+
+              </strong>
+              <span className="lbl">Happy Members</span>
+            </div>
+            <div className="ach-stat reveal">
+              <div className="ic" aria-hidden="true">
+                <i className="fa-solid fa-fire-flame-curved"></i>
+              </div>
+              <strong>
+                <span data-count="100">0</span>+
+              </strong>
+              <span className="lbl">Transformations</span>
+            </div>
+            <div className="ach-stat reveal">
+              <div className="ic" aria-hidden="true">
+                <i className="fa-solid fa-calendar-days"></i>
+              </div>
+              <strong>
+                <span data-count="50">0</span>+
+              </strong>
+              <span className="lbl">Fitness Events</span>
+            </div>
+            <div className="ach-stat reveal">
+              <div className="ic" aria-hidden="true">
+                <i className="fa-solid fa-medal"></i>
+              </div>
+              <strong>
+                <span data-count="10">0</span>+
+              </strong>
+              <span className="lbl">Awards Won</span>
+            </div>
+          </div>
+
+          <div className="ach-highlight reveal">
+            <div className="ach-highlight-inner">
+              <div className="ach-highlight-avatar">
+                <img
+                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=240&q=80"
+                  alt="Portrait of Jordan Ellis, True Fitness member"
+                  width={176}
+                  height={176}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div>
+                <blockquote className="ach-highlight-quote">
+                  True Fitness changed my lifestyle completely. The coaching, workouts, and motivation
+                  helped me achieve results I never imagined.
+                </blockquote>
+                <div className="ach-highlight-meta">
+                  <div className="stars" aria-label="5 out of 5 stars">
+                    <i className="fa-solid fa-star"></i>
+                    <i className="fa-solid fa-star"></i>
+                    <i className="fa-solid fa-star"></i>
+                    <i className="fa-solid fa-star"></i>
+                    <i className="fa-solid fa-star"></i>
+                  </div>
+                  <span className="name">Jordan Ellis</span>
+                  <span className="role">Member · Pro plan · 14 months</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CONTACT */}
       <section id="contact" className="section">
         <div className="container">
@@ -504,6 +670,8 @@ export default function Home() {
             <a href="#membership">Membership</a>
             <a href="#tracking">Tracking</a>
             <a href="#testimonials">Reviews</a>
+            <a href="#achievements">Achievements</a>
+            <a href="#contact">Contact</a>
           </div>
           <div className="footer-col">
             <h5>Quick Links</h5>
@@ -526,6 +694,41 @@ export default function Home() {
         </div>
       </footer>
     </>
+  );
+}
+
+function AchievementCard({
+  title,
+  description,
+  date,
+  dateIso,
+  image,
+  alt,
+  featured,
+}: AchievementGalleryItem) {
+  return (
+    <article
+      className={`ach-card reveal${featured ? " ach-card--featured" : " ach-card--compact"}`}
+    >
+      <div className="ach-card-media">
+        <img
+          src={image}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+          width={featured ? 1400 : 800}
+          height={featured ? 900 : 600}
+        />
+        <div className="ach-card-shade" aria-hidden="true"></div>
+        <div className="ach-card-overlay">
+          <div className="ach-card-meta">
+            <time dateTime={dateIso}>{date}</time>
+            <h3>{title}</h3>
+            <p className="ach-card-desc">{description}</p>
+          </div>
+        </div>
+      </div>
+    </article>
   );
 }
 

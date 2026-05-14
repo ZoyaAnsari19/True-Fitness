@@ -43,36 +43,7 @@
   // Reveal on scroll: handled by src/components/RevealOnScroll.tsx so it re-runs after
   // Next.js client navigation (app.js only loads once).
 
-  // ============================================
-  // Animated Counters (data-count)
-  // ============================================
-  const counters = document.querySelectorAll('[data-count]');
-  const animateCount = (el) => {
-    const target = parseInt(el.dataset.count, 10) || 0;
-    const duration = 1600;
-    const start = performance.now();
-    const startVal = 0;
-    const tick = (now) => {
-      const t = Math.min(1, (now - start) / duration);
-      const eased = 1 - Math.pow(1 - t, 3);
-      const val = Math.floor(startVal + (target - startVal) * eased);
-      el.textContent = val.toLocaleString();
-      if (t < 1) requestAnimationFrame(tick);
-      else el.textContent = target.toLocaleString();
-    };
-    requestAnimationFrame(tick);
-  };
-  if ('IntersectionObserver' in window) {
-    const co = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          animateCount(e.target);
-          co.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.4 });
-    counters.forEach(el => co.observe(el));
-  }
+  // Animated counters: src/components/RevealOnScroll.tsx (re-inits on client navigation)
 
   // ============================================
   // Smooth Anchor Scroll with Offset
@@ -201,7 +172,7 @@
   // ============================================
   // Active Nav Link on Scroll
   // ============================================
-  const sections = ['about', 'features', 'membership', 'tracking', 'testimonials', 'contact'];
+  const sections = ['about', 'features', 'membership', 'tracking', 'testimonials', 'achievements', 'contact'];
   const navAnchors = document.querySelectorAll('.nav-links a');
   const setActive = () => {
     let current = '';
