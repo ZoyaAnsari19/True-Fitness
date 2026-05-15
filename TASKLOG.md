@@ -1,5 +1,35 @@
 # Task Log
 
+## [15-05-2026 12:35] — Join form: email optional, phone required
+
+**What changed:** Updated `src/app/join/JoinView.tsx` membership inquiry validation and labels. Email is optional: empty passes; if provided, must match `EMAIL_REGEX`. Label now reads "Email (optional)". Phone is required: at least 10 digits after stripping non-digits; label is "Phone" (removed "(optional)"); input has `required` and `phoneRef` for shake on invalid submit.  
+**Files touched:** `src/app/join/JoinView.tsx`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
+## [15-05-2026 12:05] — Achievement cards: image fills full card height in grid rows
+
+**What changed:** The achievements masonry grid stretches every card in a row to the same height (`align-items: stretch`). Compact cards used a fixed `aspect-ratio` on `.ach-card-media`, so when a row was taller (e.g. next to the featured card), the media stayed short and the extra area showed empty `.ach-card` background. Updated `.ach-card` to `display: flex; flex-direction: column; height: 100%; min-height: 0` and `.ach-card-media` to `flex: 1 1 auto` with `min-width: 0` and a `min-height: clamp(...)` floor instead of `aspect-ratio`, so the photo region grows with the stretched row while `object-fit: cover` on the image still fills the media box. Featured card uses a larger `min-height` clamp; mobile breakpoint keeps sensible minimums.  
+**Files touched:** `public/static/style.css`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
+## [15-05-2026 11:22] — Trim achievements gallery and fix powerlifting card image
+
+**What changed:** Removed the "Elite Coaching Certification Hub" entry from the `ACHIEVEMENT_GALLERY` array in `src/app/page.tsx` (it was the 6th/last card in the achievements section). Also swapped the Unsplash photo on the "Regional Powerlifting Podium" card from `photo-1593079831268-3381b0db4a77` (loaded fine but visually showed treadmills, mismatched the powerlifting copy) to `photo-1532029837206-abbe2b7620e3` (chalked-hands-on-barbell deadlift photo, on-brand for the headline). Verified both Unsplash URLs return HTTP 200. No CSS / component / type changes — gallery still renders via the same `AchievementCard` component and grid (`.achievements-masonry`), now showing 5 cards instead of 6 (1 featured + 4 compact, which still tiles cleanly on the existing 3-column desktop layout).  
+**Files touched:** `src/app/page.tsx`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
 ## [11-05-2026 13:53] — Move `app/` into `src/app/`
 
 **What changed:** Migrated to `src/` based project structure — moved Next.js App Router folder from `./app` to `./src/app` using `git mv` to preserve history. Updated TypeScript `@/*` path alias to point at `./src/*`. Updated README reference. No other folders (`components/`, `lib/`, etc.) created yet — will scaffold on demand.  

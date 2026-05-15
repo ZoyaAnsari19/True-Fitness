@@ -34,6 +34,7 @@ export default function JoinView() {
 
   const cardRef = useRef<HTMLDivElement | null>(null);
   const nameRef = useRef<HTMLInputElement | null>(null);
+  const phoneRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     setPlan(normalizePlan(searchParams.get("plan")));
@@ -61,15 +62,17 @@ export default function JoinView() {
     const trimmedName = fullName.trim();
     const nameValid = trimmedName.length >= 2;
     const trimmedEmail = email.trim();
-    const emailValid = EMAIL_REGEX.test(trimmedEmail);
+    const emailValid =
+      trimmedEmail.length === 0 || EMAIL_REGEX.test(trimmedEmail);
     const digits = phone.replace(/\D/g, "");
-    const phoneValid = phone.trim().length === 0 || digits.length >= 10;
+    const phoneValid = digits.length >= 10;
 
     setNameError(!nameValid);
     setEmailError(!emailValid);
     setPhoneError(!phoneValid);
 
     if (!nameValid) shake(nameRef.current);
+    if (!phoneValid) shake(phoneRef.current);
     if (!nameValid || !emailValid || !phoneValid) return;
 
     setIsLoading(true);
@@ -220,7 +223,7 @@ export default function JoinView() {
                 </div>
 
                 <div className="join-field">
-                  <label htmlFor="join-email">Email</label>
+                  <label htmlFor="join-email">Email (optional)</label>
                   <input
                     id="join-email"
                     name="email"
@@ -238,12 +241,14 @@ export default function JoinView() {
                 </div>
 
                 <div className="join-field">
-                  <label htmlFor="join-phone">Phone (optional)</label>
+                  <label htmlFor="join-phone">Phone</label>
                   <input
                     id="join-phone"
                     name="phone"
                     type="tel"
                     autoComplete="tel"
+                    required
+                    ref={phoneRef}
                     value={phone}
                     onChange={(e) => {
                       setPhone(e.target.value);
