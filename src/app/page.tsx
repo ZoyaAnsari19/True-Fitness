@@ -28,7 +28,7 @@ const ACHIEVEMENT_GALLERY: AchievementGalleryItem[] = [
     date: "Jan 2025",
     dateIso: "2025-01",
     image:
-      "https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&w=1000&q=82",
+      "https://americanfitnesscenter.net/assets/hardcore_gym_weights_section-BLWOZhkI.png",
     alt: "Athlete preparing for a powerlifting competition",
   },
   {
@@ -46,7 +46,7 @@ const ACHIEVEMENT_GALLERY: AchievementGalleryItem[] = [
     date: "Nov 2024",
     dateIso: "2024-11",
     image:
-      "https://images.unsplash.com/photo-1583454110551-21f2fa326867?auto=format&fit=crop&w=1000&q=82",
+      "https://img.magnific.com/free-photo/strong-man-training-gym_1303-23478.jpg?semt=ais_hybrid&w=740&q=80",
     alt: "Bodybuilding and physique training with dumbbells",
   },
   {
@@ -57,15 +57,6 @@ const ACHIEVEMENT_GALLERY: AchievementGalleryItem[] = [
     image:
       "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1000&q=82",
     alt: "Group fitness event and running club outdoors",
-  },
-  {
-    title: "Elite Coaching Certification Hub",
-    description: "Ten trainers completed advanced performance certifications; members get science-backed programming every session.",
-    date: "Ongoing",
-    dateIso: "2024",
-    image:
-      "https://images.unsplash.com/photo-1574680096141-d9520b867bb6?auto=format&fit=crop&w=1000&q=82",
-    alt: "Personal trainer coaching a member on form",
   },
 ];
 
