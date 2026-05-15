@@ -1,5 +1,15 @@
 # Task Log
 
+## [15-05-2026 12:35] — Join form: email optional, phone required
+
+**What changed:** Updated `src/app/join/JoinView.tsx` membership inquiry validation and labels. Email is optional: empty passes; if provided, must match `EMAIL_REGEX`. Label now reads "Email (optional)". Phone is required: at least 10 digits after stripping non-digits; label is "Phone" (removed "(optional)"); input has `required` and `phoneRef` for shake on invalid submit.  
+**Files touched:** `src/app/join/JoinView.tsx`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
 ## [15-05-2026 12:05] — Achievement cards: image fills full card height in grid rows
 
 **What changed:** The achievements masonry grid stretches every card in a row to the same height (`align-items: stretch`). Compact cards used a fixed `aspect-ratio` on `.ach-card-media`, so when a row was taller (e.g. next to the featured card), the media stayed short and the extra area showed empty `.ach-card` background. Updated `.ach-card` to `display: flex; flex-direction: column; height: 100%; min-height: 0` and `.ach-card-media` to `flex: 1 1 auto` with `min-width: 0` and a `min-height: clamp(...)` floor instead of `aspect-ratio`, so the photo region grows with the stretched row while `object-fit: cover` on the image still fills the media box. Featured card uses a larger `min-height` clamp; mobile breakpoint keeps sensible minimums.  
