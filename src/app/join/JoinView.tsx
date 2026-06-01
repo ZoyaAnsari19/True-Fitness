@@ -15,6 +15,72 @@ function normalizePlan(value: string | null): Plan {
   return PLANS.includes(v as Plan) ? (v as Plan) : "pro";
 }
 
+function todayISO(): string {
+  const d = new Date();
+  return toISO(d);
+}
+
+function parseISODate(iso: string): Date | null {
+  if (!iso) return null;
+  const d = new Date(`${iso}T00:00:00`);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function toISO(d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function addMonths(date: Date, months: number): Date {
+  const d = new Date(date.getTime());
+  const targetMonth = d.getMonth() + months;
+  d.setMonth(targetMonth);
+  if (d.getMonth() !== ((targetMonth % 12) + 12) % 12) {
+    d.setDate(0);
+  }
+  return d;
+}
+
+function addMonthsISO(iso: string, months: number): string {
+  const parsed = parseISODate(iso);
+  if (!parsed) return iso;
+  return toISO(addMonths(parsed, months));
+}
+
+const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;
+const MONTHS = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+] as const;
+
+/** Fixed format — avoids SSR/client locale mismatch from toLocaleDateString. */
+function formatDate(d: Date): string {
+  const weekday = WEEKDAYS[d.getDay()];
+  const day = String(d.getDate()).padStart(2, "0");
+  const month = MONTHS[d.getMonth()];
+  const year = d.getFullYear();
+  return `${weekday}, ${day} ${month}, ${year}`;
+}
+
+function daysBetween(a: Date, b: Date): number {
+  const MS = 1000 * 60 * 60 * 24;
+  const start = new Date(a.getFullYear(), a.getMonth(), a.getDate()).getTime();
+  const end = new Date(b.getFullYear(), b.getMonth(), b.getDate()).getTime();
+  return Math.max(0, Math.round((end - start) / MS));
+}
+
 export default function JoinView() {
   const searchParams = useSearchParams();
   const initialPlan = normalizePlan(searchParams.get("plan"));
@@ -23,7 +89,36 @@ export default function JoinView() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [plan, setPlan] = useState<Plan>(initialPlan);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [minStartDate, setMinStartDate] = useState("");
   const [goals, setGoals] = useState("");
+
+  useEffect(() => {
+    const today = todayISO();
+    setMinStartDate(today);
+    setStartDate((prev) => prev || today);
+    setEndDate((prev) => prev || addMonthsISO(today, 1));
+  }, []);
+
+  const parsedStart = parseISODate(startDate);
+  const parsedEnd = parseISODate(endDate);
+  const validStart = parsedStart !== null;
+  const validEnd = parsedEnd !== null;
+  const validPeriod = validStart && validEnd && endDate >= startDate;
+  const totalDays =
+    validPeriod && parsedStart && parsedEnd
+      ? daysBetween(parsedStart, parsedEnd)
+      : 0;
+
+  const handleStartDateChange = (value: string) => {
+    setStartDate(value);
+    setEndDate((prev) => {
+      if (!prev || !value) return prev;
+      if (prev < value) return addMonthsISO(value, 1);
+      return prev;
+    });
+  };
 
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
@@ -273,6 +368,65 @@ export default function JoinView() {
                     <option value="premium">Premium — $99/mo</option>
                   </select>
                 </div>
+
+                <div className="join-row">
+                  <div className="join-field">
+                    <label htmlFor="join-start-date">
+                      <i className="fa-solid fa-calendar-days"></i> Join date
+                    </label>
+                    <input
+                      id="join-start-date"
+                      name="startDate"
+                      type="date"
+                      value={startDate}
+                      min={minStartDate}
+                      onChange={(e) => handleStartDateChange(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="join-field">
+                    <label htmlFor="join-end-date">
+                      <i className="fa-solid fa-calendar-check"></i> End date
+                    </label>
+                    <input
+                      id="join-end-date"
+                      name="endDate"
+                      type="date"
+                      value={endDate}
+                      min={startDate || minStartDate}
+                      onChange={(e) => setEndDate(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                {startDate && endDate && validPeriod && parsedStart && parsedEnd && (
+                  <div className="period-card" aria-live="polite">
+                    <div className="period-head">
+                      <span className="period-icon" aria-hidden="true">
+                        <i className="fa-solid fa-calendar-check"></i>
+                      </span>
+                      <div>
+                        <span className="period-title">Membership period</span>
+                        <span className="period-sub">
+                          {totalDays} {totalDays === 1 ? "day" : "days"}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="period-range">
+                      <div className="period-cell">
+                        <span className="period-label">From</span>
+                        <span className="period-value">{formatDate(parsedStart)}</span>
+                      </div>
+                      <span className="period-arrow" aria-hidden="true">
+                        <i className="fa-solid fa-arrow-right-long"></i>
+                      </span>
+                      <div className="period-cell">
+                        <span className="period-label">To</span>
+                        <span className="period-value">{formatDate(parsedEnd)}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 <div className="join-field">
                   <label htmlFor="join-goals">Fitness goals (optional)</label>

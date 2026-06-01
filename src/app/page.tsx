@@ -557,23 +557,23 @@ export default function Home() {
           <div className="contact-wrap">
             <form className="glass-card contact-form reveal" id="contactForm" noValidate>
               <div className="field">
-                <input type="text" id="cf-name" required autoComplete="name" />
                 <label htmlFor="cf-name">Full Name</label>
+                <input type="text" id="cf-name" required autoComplete="name" placeholder=" " />
                 <span className="line"></span>
               </div>
               <div className="field">
-                <input type="email" id="cf-email" required autoComplete="email" />
                 <label htmlFor="cf-email">Email Address</label>
+                <input type="email" id="cf-email" required autoComplete="email" placeholder=" " />
                 <span className="line"></span>
               </div>
               <div className="field">
-                <input type="tel" id="cf-phone" required autoComplete="tel" />
                 <label htmlFor="cf-phone">Phone Number</label>
+                <input type="tel" id="cf-phone" required autoComplete="tel" placeholder=" " />
                 <span className="line"></span>
               </div>
               <div className="field">
-                <textarea id="cf-message" rows={4} required></textarea>
                 <label htmlFor="cf-message">Your Message</label>
+                <textarea id="cf-message" rows={4} required placeholder=" "></textarea>
                 <span className="line"></span>
               </div>
               <button type="submit" className="btn btn-primary btn-lg full">
@@ -607,7 +607,7 @@ export default function Home() {
               <div className="socials">
                 <a href="#" aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a>
                 <a href="#" aria-label="Facebook"><i className="fa-brands fa-facebook-f"></i></a>
-                <a href="#" aria-label="Twitter"><i className="fa-brands fa-x-twitter"></i></a>
+                <a href="#" aria-label="X"><i className="fa-brands fa-x-twitter"></i></a>
                 <a href="#" aria-label="YouTube"><i className="fa-brands fa-youtube"></i></a>
                 <a href="#" aria-label="TikTok"><i className="fa-brands fa-tiktok"></i></a>
               </div>
@@ -650,7 +650,7 @@ export default function Home() {
             <div className="socials small">
               <a href="#" aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a>
               <a href="#" aria-label="Facebook"><i className="fa-brands fa-facebook-f"></i></a>
-              <a href="#" aria-label="Twitter"><i className="fa-brands fa-x-twitter"></i></a>
+              <a href="#" aria-label="X"><i className="fa-brands fa-x-twitter"></i></a>
               <a href="#" aria-label="YouTube"><i className="fa-brands fa-youtube"></i></a>
             </div>
           </div>

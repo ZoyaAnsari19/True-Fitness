@@ -1389,57 +1389,111 @@ a { color: inherit; text-decoration: none; }
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 16px;
   padding: 36px;
+  overflow: visible;
+  --field-bg: #07090d;
 }
-.field {
+.contact-form .field {
   position: relative;
-}
-.field input, .field textarea {
-  width: 100%;
-  background: transparent;
+  display: flex;
+  flex-direction: column;
+  min-height: 72px;
+  margin: 0;
+  padding: 10px 14px 0;
+  background: var(--field-bg);
   border: 0;
-  border-bottom: 1px solid var(--border-2);
-  padding: 18px 0 10px;
-  color: var(--text);
-  font-size: 15px;
-  font-family: inherit;
-  outline: none;
-  resize: none;
-  transition: border-color .25s;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: inset 0 -1px 0 var(--border-2);
+  transition: box-shadow .25s ease;
 }
-.field textarea { padding-top: 18px; }
-.field label {
+.contact-form .field:focus-within {
+  box-shadow: inset 0 -2px 0 transparent;
+}
+.contact-form .field label {
   position: absolute;
-  left: 0; top: 18px;
-  font-size: 14px;
+  left: 14px;
+  right: 14px;
+  top: 34px;
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  line-height: 1.5;
   color: var(--text-mute);
   pointer-events: none;
-  transition: all .25s ease;
+  transition: top .22s ease, font-size .22s ease, color .22s ease;
 }
-.field input:focus ~ label,
-.field input:not(:placeholder-shown) ~ label,
-.field input:valid:not([value=""]) ~ label,
-.field textarea:focus ~ label,
-.field textarea:not(:placeholder-shown) ~ label {
-  top: -2px;
+.contact-form .field:focus-within label,
+.contact-form .field:has(input:not(:placeholder-shown)) label,
+.contact-form .field:has(textarea:not(:placeholder-shown)) label {
+  top: 12px;
   font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
   color: var(--neon);
-  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
-.field input:focus, .field textarea:focus { border-bottom-color: var(--neon); }
-.field .line {
+.contact-form .field input,
+.contact-form .field textarea {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 34px 0 14px;
+  border: 0;
+  border-radius: 0;
+  background: var(--field-bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.5;
+  font-family: inherit;
+  outline: none;
+  resize: vertical;
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+}
+.contact-form .field:focus-within input,
+.contact-form .field:has(input:not(:placeholder-shown)) input,
+.contact-form .field:focus-within textarea,
+.contact-form .field:has(textarea:not(:placeholder-shown)) textarea {
+  padding-top: 28px;
+}
+.contact-form .field input {
+  min-height: 56px;
+}
+.contact-form .field textarea {
+  min-height: 112px;
+  line-height: 1.55;
+}
+.contact-form .field input::placeholder,
+.contact-form .field textarea::placeholder {
+  color: transparent;
+}
+.contact-form .field input:-webkit-autofill,
+.contact-form .field input:-webkit-autofill:hover,
+.contact-form .field input:-webkit-autofill:focus,
+.contact-form .field input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--text) !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--field-bg) inset !important;
+  caret-color: var(--text);
+  transition: background-color 5000s ease-in-out 0s;
+}
+.contact-form .field .line {
   position: absolute;
-  left: 0; bottom: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   height: 2px;
   width: 0;
   background: var(--grad);
   transition: width .35s ease;
-  border-radius: 2px;
+  border-radius: 0;
+  pointer-events: none;
 }
-.field input:focus ~ .line,
-.field textarea:focus ~ .line { width: 100%; }
+.contact-form .field:focus-within .line {
+  width: 100%;
+}
 
 .form-status {
   font-size: 13px;
