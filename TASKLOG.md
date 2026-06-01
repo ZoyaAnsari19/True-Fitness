@@ -170,6 +170,16 @@
 
 ---
 
+## [01-06-2026 16:05] — Fix join form hydration mismatch
+
+**What changed:** Replaced `toLocaleDateString(undefined)` with a deterministic manual date formatter (`Mon, 01 Jun, 2026`) so SSR and client output match. Deferred default join date and `min` to a `useEffect` on mount (empty initial state) to avoid timezone drift between server and browser. Period preview renders only after `startDate` is set.  
+**Files touched:** `src/app/join/JoinView.tsx`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
 ## [01-06-2026 15:42] — Join form: calendar + membership period preview
 
 **What changed:** Added a "Join date" date picker and a "Duration" selector (1 / 3 / 6 / 12 months) to the membership inquiry form. Added a live, animated "Membership period" preview card that shows the formatted From → To range and total days based on the selected start date + duration. Implemented `todayISO`, `addMonths` (with month-rollover clamp), `formatDate`, and `daysBetween` helpers. Styled the new two-column row, themed the native date input for dark mode, and added the gradient period preview card with arrow and From/To cells.  

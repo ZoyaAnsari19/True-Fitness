@@ -37,13 +37,29 @@ function addMonths(date: Date, months: number): Date {
   return d;
 }
 
+const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;
+const MONTHS = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+] as const;
+
+/** Fixed format — avoids SSR/client locale mismatch from toLocaleDateString. */
 function formatDate(d: Date): string {
-  return d.toLocaleDateString(undefined, {
-    weekday: "short",
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
+  const weekday = WEEKDAYS[d.getDay()];
+  const day = String(d.getDate()).padStart(2, "0");
+  const month = MONTHS[d.getMonth()];
+  const year = d.getFullYear();
+  return `${weekday}, ${day} ${month}, ${year}`;
 }
 
 function daysBetween(a: Date, b: Date): number {
@@ -61,11 +77,16 @@ export default function JoinView() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [plan, setPlan] = useState<Plan>(initialPlan);
-  const [startDate, setStartDate] = useState<string>(todayISO());
+  const [startDate, setStartDate] = useState("");
+  const [minStartDate, setMinStartDate] = useState("");
   const [durationMonths, setDurationMonths] = useState<DurationMonths>(1);
   const [goals, setGoals] = useState("");
 
-  const minStartDate = todayISO();
+  useEffect(() => {
+    const today = todayISO();
+    setMinStartDate(today);
+    setStartDate((prev) => prev || today);
+  }, []);
   const parsedStart = startDate ? new Date(`${startDate}T00:00:00`) : null;
   const validStart = parsedStart && !Number.isNaN(parsedStart.getTime());
   const endDateObj = validStart ? addMonths(parsedStart, durationMonths) : null;
@@ -355,7 +376,7 @@ export default function JoinView() {
                   </div>
                 </div>
 
-                {validStart && endDateObj && (
+                {startDate && validStart && endDateObj && (
                   <div className="period-card" aria-live="polite">
                     <div className="period-head">
                       <span className="period-icon" aria-hidden="true">
