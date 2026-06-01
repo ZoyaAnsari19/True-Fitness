@@ -170,6 +170,46 @@
 
 ---
 
+## [01-06-2026 17:25] — Contact form solid black field background
+
+**What changed:** Each contact field uses solid `#07090d` background on wrapper and inputs; default divider is full-width `inset` bottom line; focus accent `.line` spans the same width at `bottom: 0`. Autofill inset shadow matches field black. Label/input share `14px` horizontal inset.  
+**Files touched:** `public/static/style.css`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
+## [01-06-2026 17:15] — Contact form label/input alignment
+
+**What changed:** Rebuilt contact field layout: label before input in markup; shared `left: 0` edge for label and value; label sits on the same baseline as text when empty (`top: 22px`), floats to `top: 0` when focused/filled; border on `.field` wrapper; removed `letter-spacing` offset on floated labels.  
+**Files touched:** `public/static/style.css`, `src/app/page.tsx`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
+## [01-06-2026 17:05] — Align contact form input text position
+
+**What changed:** Reworked contact field layout: label centers when empty (`translateY(-50%)`), floats to `top: 10px` when filled; inputs use fixed `height` + balanced padding (`26px` top / `16px` bottom when filled, `64px` tall) so typed text sits in the middle band below the label instead of against the bottom border.  
+**Files touched:** `public/static/style.css`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
+## [01-06-2026 16:50] — Fix contact form filled text clipping
+
+**What changed:** Contact form fields now have min-height, extra padding when label floats, and `overflow: visible` on the form card. Added `placeholder=" "` for reliable floating-label detection; scoped styles under `.contact-form`; fixed WebKit autofill so text stays light on dark.  
+**Files touched:** `public/static/style.css`, `src/app/page.tsx`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
 ## [01-06-2026 16:35] — Fix missing X (Twitter) social icon
 
 **What changed:** Upgraded Font Awesome CDN from 6.4.0 to 6.7.2 so `fa-x-twitter` (added in 6.4.2+) renders in the contact/footer social row. Updated aria-label from "Twitter" to "X".  
