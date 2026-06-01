@@ -10,9 +10,6 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PLANS = ["basic", "pro", "premium"] as const;
 type Plan = (typeof PLANS)[number];
 
-const DURATIONS = [1, 3, 6, 12] as const;
-type DurationMonths = (typeof DURATIONS)[number];
-
 function normalizePlan(value: string | null): Plan {
   const v = (value || "").toLowerCase();
   return PLANS.includes(v as Plan) ? (v as Plan) : "pro";
@@ -20,6 +17,16 @@ function normalizePlan(value: string | null): Plan {
 
 function todayISO(): string {
   const d = new Date();
+  return toISO(d);
+}
+
+function parseISODate(iso: string): Date | null {
+  if (!iso) return null;
+  const d = new Date(`${iso}T00:00:00`);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function toISO(d: Date): string {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
   const day = String(d.getDate()).padStart(2, "0");
@@ -30,11 +37,16 @@ function addMonths(date: Date, months: number): Date {
   const d = new Date(date.getTime());
   const targetMonth = d.getMonth() + months;
   d.setMonth(targetMonth);
-  // Guard against month rollover (e.g. Jan 31 + 1 month) by clamping to last day
   if (d.getMonth() !== ((targetMonth % 12) + 12) % 12) {
     d.setDate(0);
   }
   return d;
+}
+
+function addMonthsISO(iso: string, months: number): string {
+  const parsed = parseISODate(iso);
+  if (!parsed) return iso;
+  return toISO(addMonths(parsed, months));
 }
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;
@@ -78,19 +90,35 @@ export default function JoinView() {
   const [phone, setPhone] = useState("");
   const [plan, setPlan] = useState<Plan>(initialPlan);
   const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [minStartDate, setMinStartDate] = useState("");
-  const [durationMonths, setDurationMonths] = useState<DurationMonths>(1);
   const [goals, setGoals] = useState("");
 
   useEffect(() => {
     const today = todayISO();
     setMinStartDate(today);
     setStartDate((prev) => prev || today);
+    setEndDate((prev) => prev || addMonthsISO(today, 1));
   }, []);
-  const parsedStart = startDate ? new Date(`${startDate}T00:00:00`) : null;
-  const validStart = parsedStart && !Number.isNaN(parsedStart.getTime());
-  const endDateObj = validStart ? addMonths(parsedStart, durationMonths) : null;
-  const totalDays = validStart && endDateObj ? daysBetween(parsedStart, endDateObj) : 0;
+
+  const parsedStart = parseISODate(startDate);
+  const parsedEnd = parseISODate(endDate);
+  const validStart = parsedStart !== null;
+  const validEnd = parsedEnd !== null;
+  const validPeriod = validStart && validEnd && endDate >= startDate;
+  const totalDays =
+    validPeriod && parsedStart && parsedEnd
+      ? daysBetween(parsedStart, parsedEnd)
+      : 0;
+
+  const handleStartDateChange = (value: string) => {
+    setStartDate(value);
+    setEndDate((prev) => {
+      if (!prev || !value) return prev;
+      if (prev < value) return addMonthsISO(value, 1);
+      return prev;
+    });
+  };
 
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
@@ -352,31 +380,26 @@ export default function JoinView() {
                       type="date"
                       value={startDate}
                       min={minStartDate}
-                      onChange={(e) => setStartDate(e.target.value)}
+                      onChange={(e) => handleStartDateChange(e.target.value)}
                     />
                   </div>
 
                   <div className="join-field">
-                    <label htmlFor="join-duration">
-                      <i className="fa-solid fa-hourglass-half"></i> Duration
+                    <label htmlFor="join-end-date">
+                      <i className="fa-solid fa-calendar-check"></i> End date
                     </label>
-                    <select
-                      id="join-duration"
-                      name="duration"
-                      value={durationMonths}
-                      onChange={(e) =>
-                        setDurationMonths(Number(e.target.value) as DurationMonths)
-                      }
-                    >
-                      <option value={1}>1 month</option>
-                      <option value={3}>3 months</option>
-                      <option value={6}>6 months</option>
-                      <option value={12}>12 months</option>
-                    </select>
+                    <input
+                      id="join-end-date"
+                      name="endDate"
+                      type="date"
+                      value={endDate}
+                      min={startDate || minStartDate}
+                      onChange={(e) => setEndDate(e.target.value)}
+                    />
                   </div>
                 </div>
 
-                {startDate && validStart && endDateObj && (
+                {startDate && endDate && validPeriod && parsedStart && parsedEnd && (
                   <div className="period-card" aria-live="polite">
                     <div className="period-head">
                       <span className="period-icon" aria-hidden="true">
@@ -385,7 +408,7 @@ export default function JoinView() {
                       <div>
                         <span className="period-title">Membership period</span>
                         <span className="period-sub">
-                          {durationMonths} {durationMonths === 1 ? "month" : "months"} · {totalDays} days
+                          {totalDays} {totalDays === 1 ? "day" : "days"}
                         </span>
                       </div>
                     </div>
@@ -399,7 +422,7 @@ export default function JoinView() {
                       </span>
                       <div className="period-cell">
                         <span className="period-label">To</span>
-                        <span className="period-value">{formatDate(endDateObj)}</span>
+                        <span className="period-value">{formatDate(parsedEnd)}</span>
                       </div>
                     </div>
                   </div>

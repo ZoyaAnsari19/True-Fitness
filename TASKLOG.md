@@ -170,6 +170,16 @@
 
 ---
 
+## [01-06-2026 16:20] — Join form: duration → end date picker
+
+**What changed:** Replaced the Duration dropdown with an End date calendar input. Period preview now uses the selected end date (From → To) and shows total days only. Default end date is one month after join date on mount; if join date moves past end date, end date auto-adjusts forward by one month.  
+**Files touched:** `src/app/join/JoinView.tsx`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
 ## [01-06-2026 16:05] — Fix join form hydration mismatch
 
 **What changed:** Replaced `toLocaleDateString(undefined)` with a deterministic manual date formatter (`Mon, 01 Jun, 2026`) so SSR and client output match. Deferred default join date and `min` to a `useEffect` on mount (empty initial state) to avoid timezone drift between server and browser. Period preview renders only after `startDate` is set.  
