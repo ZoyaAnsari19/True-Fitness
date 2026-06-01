@@ -170,6 +170,16 @@
 
 ---
 
+## [01-06-2026 16:35] — Fix missing X (Twitter) social icon
+
+**What changed:** Upgraded Font Awesome CDN from 6.4.0 to 6.7.2 so `fa-x-twitter` (added in 6.4.2+) renders in the contact/footer social row. Updated aria-label from "Twitter" to "X".  
+**Files touched:** `src/app/layout.tsx`, `src/app/page.tsx`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
+
 ## [01-06-2026 16:20] — Join form: duration → end date picker
 
 **What changed:** Replaced the Duration dropdown with an End date calendar input. Period preview now uses the selected end date (From → To) and shows total days only. Default end date is one month after join date on mount; if join date moves past end date, end date auto-adjusts forward by one month.  

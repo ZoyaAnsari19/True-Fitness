@@ -607,7 +607,7 @@ export default function Home() {
               <div className="socials">
                 <a href="#" aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a>
                 <a href="#" aria-label="Facebook"><i className="fa-brands fa-facebook-f"></i></a>
-                <a href="#" aria-label="Twitter"><i className="fa-brands fa-x-twitter"></i></a>
+                <a href="#" aria-label="X"><i className="fa-brands fa-x-twitter"></i></a>
                 <a href="#" aria-label="YouTube"><i className="fa-brands fa-youtube"></i></a>
                 <a href="#" aria-label="TikTok"><i className="fa-brands fa-tiktok"></i></a>
               </div>
@@ -650,7 +650,7 @@ export default function Home() {
             <div className="socials small">
               <a href="#" aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a>
               <a href="#" aria-label="Facebook"><i className="fa-brands fa-facebook-f"></i></a>
-              <a href="#" aria-label="Twitter"><i className="fa-brands fa-x-twitter"></i></a>
+              <a href="#" aria-label="X"><i className="fa-brands fa-x-twitter"></i></a>
               <a href="#" aria-label="YouTube"><i className="fa-brands fa-youtube"></i></a>
             </div>
           </div>
