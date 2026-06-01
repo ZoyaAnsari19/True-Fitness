@@ -10,9 +10,47 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PLANS = ["basic", "pro", "premium"] as const;
 type Plan = (typeof PLANS)[number];
 
+const DURATIONS = [1, 3, 6, 12] as const;
+type DurationMonths = (typeof DURATIONS)[number];
+
 function normalizePlan(value: string | null): Plan {
   const v = (value || "").toLowerCase();
   return PLANS.includes(v as Plan) ? (v as Plan) : "pro";
+}
+
+function todayISO(): string {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function addMonths(date: Date, months: number): Date {
+  const d = new Date(date.getTime());
+  const targetMonth = d.getMonth() + months;
+  d.setMonth(targetMonth);
+  // Guard against month rollover (e.g. Jan 31 + 1 month) by clamping to last day
+  if (d.getMonth() !== ((targetMonth % 12) + 12) % 12) {
+    d.setDate(0);
+  }
+  return d;
+}
+
+function formatDate(d: Date): string {
+  return d.toLocaleDateString(undefined, {
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+}
+
+function daysBetween(a: Date, b: Date): number {
+  const MS = 1000 * 60 * 60 * 24;
+  const start = new Date(a.getFullYear(), a.getMonth(), a.getDate()).getTime();
+  const end = new Date(b.getFullYear(), b.getMonth(), b.getDate()).getTime();
+  return Math.max(0, Math.round((end - start) / MS));
 }
 
 export default function JoinView() {
@@ -23,7 +61,15 @@ export default function JoinView() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [plan, setPlan] = useState<Plan>(initialPlan);
+  const [startDate, setStartDate] = useState<string>(todayISO());
+  const [durationMonths, setDurationMonths] = useState<DurationMonths>(1);
   const [goals, setGoals] = useState("");
+
+  const minStartDate = todayISO();
+  const parsedStart = startDate ? new Date(`${startDate}T00:00:00`) : null;
+  const validStart = parsedStart && !Number.isNaN(parsedStart.getTime());
+  const endDateObj = validStart ? addMonths(parsedStart, durationMonths) : null;
+  const totalDays = validStart && endDateObj ? daysBetween(parsedStart, endDateObj) : 0;
 
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
@@ -273,6 +319,70 @@ export default function JoinView() {
                     <option value="premium">Premium — $99/mo</option>
                   </select>
                 </div>
+
+                <div className="join-row">
+                  <div className="join-field">
+                    <label htmlFor="join-start-date">
+                      <i className="fa-solid fa-calendar-days"></i> Join date
+                    </label>
+                    <input
+                      id="join-start-date"
+                      name="startDate"
+                      type="date"
+                      value={startDate}
+                      min={minStartDate}
+                      onChange={(e) => setStartDate(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="join-field">
+                    <label htmlFor="join-duration">
+                      <i className="fa-solid fa-hourglass-half"></i> Duration
+                    </label>
+                    <select
+                      id="join-duration"
+                      name="duration"
+                      value={durationMonths}
+                      onChange={(e) =>
+                        setDurationMonths(Number(e.target.value) as DurationMonths)
+                      }
+                    >
+                      <option value={1}>1 month</option>
+                      <option value={3}>3 months</option>
+                      <option value={6}>6 months</option>
+                      <option value={12}>12 months</option>
+                    </select>
+                  </div>
+                </div>
+
+                {validStart && endDateObj && (
+                  <div className="period-card" aria-live="polite">
+                    <div className="period-head">
+                      <span className="period-icon" aria-hidden="true">
+                        <i className="fa-solid fa-calendar-check"></i>
+                      </span>
+                      <div>
+                        <span className="period-title">Membership period</span>
+                        <span className="period-sub">
+                          {durationMonths} {durationMonths === 1 ? "month" : "months"} · {totalDays} days
+                        </span>
+                      </div>
+                    </div>
+                    <div className="period-range">
+                      <div className="period-cell">
+                        <span className="period-label">From</span>
+                        <span className="period-value">{formatDate(parsedStart)}</span>
+                      </div>
+                      <span className="period-arrow" aria-hidden="true">
+                        <i className="fa-solid fa-arrow-right-long"></i>
+                      </span>
+                      <div className="period-cell">
+                        <span className="period-label">To</span>
+                        <span className="period-value">{formatDate(endDateObj)}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 <div className="join-field">
                   <label htmlFor="join-goals">Fitness goals (optional)</label>

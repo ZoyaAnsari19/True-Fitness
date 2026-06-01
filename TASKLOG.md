@@ -169,3 +169,13 @@
 **Branch:** zoya-dev  
 
 ---
+
+## [01-06-2026 15:42] — Join form: calendar + membership period preview
+
+**What changed:** Added a "Join date" date picker and a "Duration" selector (1 / 3 / 6 / 12 months) to the membership inquiry form. Added a live, animated "Membership period" preview card that shows the formatted From → To range and total days based on the selected start date + duration. Implemented `todayISO`, `addMonths` (with month-rollover clamp), `formatDate`, and `daysBetween` helpers. Styled the new two-column row, themed the native date input for dark mode, and added the gradient period preview card with arrow and From/To cells.  
+**Files touched:** `src/app/join/JoinView.tsx`, `src/app/join/join.css`, `TASKLOG.md`  
+**API endpoints used:** —  
+**Breaking change:** NO  
+**Branch:** zoya-dev  
+
+---
